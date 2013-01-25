@@ -9,7 +9,10 @@ class MoviesController < ApplicationController
   def index
     # @movies = Movie.all
     @movies = Movie.order(params[:sort])
-    @class= "hilite"
+    
+    @all_ratings = Movie.all_ratings
+
+    # way to refactor this?
     case
     when params[:sort] == "title"
       @title_class = "hilite"
