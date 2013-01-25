@@ -1,7 +1,11 @@
 -#  This file is app/views/movies/index.html.haml
 %h1 All Movies
 
-= p params[:ratings]
+= p params
+%br
+- if params[:ratings]
+  - params[:ratings].each do |key,value| 
+    = p "ratings[#{key}] #{value}"  
 
 = form_tag movies_path, :method => :get do
   Include:
@@ -9,6 +13,9 @@
     = rating
     = check_box_tag "ratings[#{rating}]"
   = hidden_field_tag 'sort', params[:sort]
+  - if params[:ratings]
+    - params[:ratings].each do |key,value| 
+      = hidden_field_tag "ratings[#{key}]", value
   = submit_tag 'Refresh'
 
 %table#movies
