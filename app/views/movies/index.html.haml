@@ -11,19 +11,20 @@
   Include:
   - @all_ratings.each do |rating|
     = rating
-    = check_box_tag "ratings[#{rating}]"
+    / = check_box_tag "ratings[#{rating}]"
+    = check_box_tag "ratings[]", rating, @selected_ratings.include?(rating)
   = hidden_field_tag 'sort', params[:sort]
-  - if params[:ratings]
-    - params[:ratings].each do |key,value| 
-      = hidden_field_tag "ratings[#{key}]", value
+  / - if params[:ratings]
+  /   - params[:ratings].each do |key,value| 
+  /     = hidden_field_tag "ratings[#{key}]", value
   = submit_tag 'Refresh'
 
 %table#movies
   %thead
     %tr
-      %th{class:@title_class} #{ link_to 'Movie Title', movies_path(:sort => "title"), :id => "title_header" }
+      %th{class:@title_class} #{ link_to 'Movie Title', movies_path(:sort => "title", :ratings => params[:ratings]), :id => "title_header" }
       %th Rating
-      %th{class:@released_class} #{ link_to 'Release Date', movies_path(:sort => "release_date"), :id => "release_date_header"  }
+      %th{class:@released_class} #{ link_to 'Release Date', movies_path(:sort => "release_date", :ratings => params[:ratings]), :id => "release_date_header"  }
       %th More Info
   %tbody
     - @movies.each do |movie|

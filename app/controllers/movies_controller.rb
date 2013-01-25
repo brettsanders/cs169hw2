@@ -8,14 +8,18 @@ class MoviesController < ApplicationController
 
   def index
     # @movies = Movie.all
-    if params[:ratings]
-      @movies = Movie.order(params[:sort]).where("rating IN (?)", params[:ratings].keys)
-    else
-      @movies = Movie.order(params[:sort])
-    end
+    # if params[:ratings]
+    #   @movies = Movie.order(params[:sort]).where("rating IN (?)", params[:ratings].keys)
+    # else
+    #   @movies = Movie.order(params[:sort])
+    # end
+    @movies = Movie.order(params[:sort])
+    # @movies = @movies.where(:rating => params[:ratings].keys) if params[:ratings].present?
+    @movies = @movies.where("rating IN (?)", params[:ratings]) if params[:ratings].present? and params[:ratings].any?
     
     @all_ratings = Movie.all_ratings
 
+    @selected_ratings = (params[:ratings].present? ? params[:ratings] : [])
     # way to refactor this?
     case
     when params[:sort] == "title"
