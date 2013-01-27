@@ -18,7 +18,14 @@ class MoviesController < ApplicationController
     
     @all_ratings = Movie.all_ratings
 
-    @selected_ratings = (params[:ratings].present? ? params[:ratings] : [])
+    # trying to get boxes checked at start
+    if !params[:ratings]
+      @selected_ratings = @all_ratings
+      @movies = Movie.order(params[:sort])
+    else
+      @selected_ratings = (params[:ratings].present? ? params[:ratings] : [])
+    end
+    
     # way to refactor this?
     case
     when params[:sort] == "title"
