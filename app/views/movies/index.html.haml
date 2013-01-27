@@ -7,13 +7,13 @@
   - params[:ratings].each do |key,value| 
     = p "ratings[#{key}] #{value}"  
 
-= form_tag movies_path, :method => :get do
+= form_tag movies_path, :method => :get, :id => "ratings_form" do
   Include:
   - @all_ratings.each do |rating|
     = rating
-    = check_box_tag "ratings[]", rating, @selected_ratings.include?(rating)
+    = check_box_tag "ratings[]", rating, @selected_ratings.include?(rating), :id => "ratings_#{rating}"
   = hidden_field_tag 'sort', params[:sort]
-  = submit_tag 'Refresh'
+  = submit_tag 'Refresh', :id => "ratings_submit"
 
 %table#movies
   %thead
