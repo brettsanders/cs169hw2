@@ -7,15 +7,14 @@ class MoviesController < ApplicationController
   end
 
   def index
-    # @movies = Movie.all
-    # if params[:ratings]
-    #   @movies = Movie.order(params[:sort]).where("rating IN (?)", params[:ratings].keys)
-    # else
-    #   @movies = Movie.order(params[:sort])
-    # end
+  
     @movies = Movie.order(params[:sort])
-    # @movies = @movies.where(:rating => params[:ratings].keys) if params[:ratings].present?
-    @movies = @movies.where("rating IN (?)", params[:ratings]) if params[:ratings].present? and params[:ratings].any?
+    # using this line has none checked by default
+    # when all unchecked, no results
+    @movies = @movies.where("rating IN (?)", params[:ratings])
+
+    # @movies = @movies.where("rating IN (?)", params[:ratings]) if params[:ratings].present? and params[:ratings].any?
+
     
     @all_ratings = Movie.all_ratings
 
