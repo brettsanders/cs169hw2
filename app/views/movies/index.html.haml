@@ -3,9 +3,7 @@
 
 = p params
 %br
-- if params[:ratings]
-  - params[:ratings].each do |key,value| 
-    = p "ratings[#{key}] #{value}"  
+= p session  
 
 = form_tag movies_path, :method => :get, :id => "ratings_form" do
   Include:

@@ -18,9 +18,17 @@ class MoviesController < ApplicationController
     
     @all_ratings = Movie.all_ratings
 
-    # trying to get boxes checked at start
+    # working code
     if !params[:ratings]
       @selected_ratings = @all_ratings
+      if session[:ratings]
+        @selected_ratings = session[:ratings]
+      end
+      if !params[:sort]
+        if session[:sort]
+          params[:sort] = session[:sort]
+        end
+      end
       @movies = Movie.order(params[:sort])
     else
       @selected_ratings = (params[:ratings].present? ? params[:ratings] : [])
@@ -34,6 +42,9 @@ class MoviesController < ApplicationController
       @released_class = "hilite"
     end
     
+    session[:ratings] = params[:ratings]
+    session[:sort] = params[:sort]
+
   end
 
   def new
